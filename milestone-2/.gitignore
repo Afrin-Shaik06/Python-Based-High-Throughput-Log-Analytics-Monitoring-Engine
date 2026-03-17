@@ -1,0 +1,5 @@
+venv312/
+__pycache__/
+pipeline.log
+processed_logs/
+*.pyc
