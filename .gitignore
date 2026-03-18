@@ -1,0 +1,15 @@
+# Virtual environments
+venv/
+venv312/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Logs & outputs
+*.log
+outputs/
+processed_logs/
+
+# System files
+.DS_Store
