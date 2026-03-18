@@ -5,11 +5,17 @@ venv312/
 # Python cache
 __pycache__/
 *.pyc
+.pytest_cache/
 
-# Logs & outputs
+# Logs
 *.log
-outputs/
-processed_logs/
+
+# Ignore runtime outputs (pipeline generated)
+milestone-2/outputs/
+milestone-2/processed_logs/
+
+# Allow documentation outputs
+!docs/outputs/
 
 # System files
 .DS_Store
