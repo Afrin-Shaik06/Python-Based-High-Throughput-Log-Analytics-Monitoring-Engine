@@ -1,9 +1,15 @@
 from dask.distributed import Client
 import time
 import logging
+import pandas as pd
+import os
+
 from ingestion import ingest_logs
 from parser import parse_log
 from processing import process_logs
+from anomaly_detection import detect_anomalies
+from alerting import send_alerts
+
 
 # ---------------- Logging ----------------
 logging.basicConfig(
@@ -12,7 +18,10 @@ logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
+
+# ---------------- Batch Parsing ----------------
 def parse_batch(log_batch):
+    """Parse a batch of logs."""
     results = []
     for log in log_batch:
         parsed = parse_log(log)
@@ -21,51 +30,118 @@ def parse_batch(log_batch):
     return results
 
 
+# ---------------- Main Pipeline ----------------
 def run_dask(file_path):
-    client = Client()
-    print("Dask cluster started:", client)
-    print("Dask Dashboard Link:", client.dashboard_link)
 
-    logging.info("Dask pipeline started")
-    start = time.time()
+    with Client() as client:
 
-    logs = ingest_logs(file_path)
-    print("Total logs ingested:", len(logs))
-    logging.info(f"Logs ingested: {len(logs)}")
+        print("Dask cluster started:", client)
+        print("Dask Dashboard Link:", client.dashboard_link)
 
-    # -------- Batching --------
-    batch_size = 500
-    batches = [logs[i:i + batch_size] for i in range(0, len(logs), batch_size)]
-    logging.info(f"Batches created: {len(batches)}")
+        logging.info("Dask pipeline started")
+        start_time = time.time()
 
-    # -------- Distributed Execution --------
-    futures = client.map(parse_batch, batches)
-    results = client.gather(futures)
+        # -------- Ingestion --------
+        logs = ingest_logs(file_path)
+        print("Total logs ingested:", len(logs))
+        logging.info(f"Logs ingested: {len(logs)}")
 
-    parsed_logs = []
-    for batch in results:
-        parsed_logs.extend(batch)
+        if not logs:
+            print("⚠️ No logs found")
+            return []
 
-    print("Sample processed logs:", parsed_logs[:3])
-    logging.info(f"Parsed logs: {len(parsed_logs)}")
+        # -------- Create Batches --------
+        batch_size = 500
+        batches = [logs[i:i + batch_size] for i in range(0, len(logs), batch_size)]
 
-    # -------- Analytics --------
-    error_count = process_logs(parsed_logs)
+        logging.info(f"Batches created: {len(batches)}")
 
-    end = time.time()
-    total_time = end - start
-    throughput = len(parsed_logs) / total_time if total_time > 0 else 0
+        # -------- Distributed Parsing --------
+        futures = client.map(parse_batch, batches)
+        results = client.gather(futures)
 
-    print("Dask Processing Time:", total_time)
-    print("Throughput:", throughput, "logs/sec")
+        parsed_logs = []
 
-    logging.info(f"Processing Time: {total_time}")
-    logging.info(f"Throughput: {throughput}")
-    logging.info("Dask pipeline completed")
-    input("Press Enter to close Dask client...")
-    client.close()
-    return parsed_logs
+        for batch in results:
+            parsed_logs.extend(batch)
+
+        print("Sample processed logs:", parsed_logs[:3])
+
+        logging.info(f"Parsed logs: {len(parsed_logs)}")
+
+        if not parsed_logs:
+            print("⚠️ No parsed logs available")
+            return []
+
+        # -------- Analytics --------
+        process_logs(parsed_logs)
+
+        # -------- Anomaly Detection --------
+        anomalies = detect_anomalies(parsed_logs)
+
+        print("Anomalies detected:", len(anomalies))
+        logging.info(f"Anomalies detected: {len(anomalies)}")
+
+        # -------- Alerting --------
+        if anomalies:
+            send_alerts(anomalies)
+            print("🚨 Alerts sent!")
+        else:
+            print("✅ No anomalies")
+
+        # -------- Save CSV for Dashboard --------
+        os.makedirs("processed_logs", exist_ok=True)
+
+        df = pd.DataFrame(parsed_logs)
+
+        # Add anomaly column
+        df["anomaly"] = 0
+
+        # -------- Mark anomalies in dataframe --------
+        if anomalies:
+
+            for anomaly in anomalies:
+
+                index = next(
+                    (i for i, log in enumerate(parsed_logs) if log == anomaly),
+                    None
+                )
+
+                if index is not None and index < len(df):
+                    df.loc[index, "anomaly"] = 1
+
+        # Save CSV
+        df.to_csv("processed_logs/output.csv", index=False)
+
+        print("✅ CSV saved for dashboard")
+
+        # -------- Save anomalies separately --------
+        if anomalies:
+
+            os.makedirs("docs/outputs", exist_ok=True)
+
+            with open("docs/outputs/anomalies.txt", "w") as f:
+
+                for anomaly in anomalies:
+                    f.write(str(anomaly) + "\n")
+
+        # -------- Performance Metrics --------
+        end_time = time.time()
+
+        total_time = end_time - start_time
+
+        throughput = len(parsed_logs) / total_time if total_time > 0 else 0
+
+        print("\n⏱ Processing Time:", round(total_time, 2), "seconds")
+        print("🚀 Throughput:", round(throughput, 2), "logs/sec")
+
+        logging.info(f"Processing Time: {total_time}")
+        logging.info(f"Throughput: {throughput}")
+        logging.info("Pipeline completed")
+
+        return parsed_logs
 
 
+# ---------------- Run Pipeline ----------------
 if __name__ == "__main__":
-    run_dask("data/sample_logs.jsonl")
+    run_dask("data/sample_logs_new.jsonl")
