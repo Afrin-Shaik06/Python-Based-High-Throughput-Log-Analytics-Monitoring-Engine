@@ -1,163 +1,274 @@
-High Throughput Log Analytics & Monitoring System
+# High Throughput Log Analytics & Monitoring System
 
 ## 📌 Overview
-This project models a distributed log analytics system designed to handle high-throughput log streams.  
-It demonstrates schema design, system architecture, and distributed processing concepts using Dask and Ray.
 
-The system is designed to:
+This project implements a **Distributed Log Analytics and Monitoring System** designed to process large volumes of logs efficiently.
 
-• Process large log datasets
-• Detect anomalies
-• Perform distributed computation
-• Ensure scalable monitoring
+The system demonstrates:
 
-## 🧩 Components
-• Log Sources – Servers / Applications generating logs  
-• Ingestion Layer – Distributed ingestion using Dask / Ray  
-• Processing Engine – Parsing & analytics  
-• Anomaly Detection – Identifying unusual patterns  
-• Storage – Centralized log storage  
-• Monitoring – Dashboards & alerts  
+* Distributed log processing
+* High-throughput log ingestion
+* Real-time monitoring
+* Anomaly detection
+* Scalable data analytics pipelines
 
-## Milestone-1 Deliverables
-• System Architecture Diagram → diagrams/system_architecture.png  
-• Data Flow Diagram → diagrams/data_flow.png  
-• Log Schema Definition → schemas/log_schema.yaml  
-• Anomaly Schema Definition → schemas/anomaly_schema.yaml
+The implementation uses **distributed computing frameworks** and modern monitoring tools.
 
-## 📂 Folder Structure
-Milestone-1
+---
+
+# 🏗 System Architecture
+
+```text
+Log Sources
+      ↓
+Log Ingestion Layer
+      ↓
+Distributed Processing (Dask / Ray)
+      ↓
+Log Parsing & Analytics
+      ↓
+Anomaly Detection
+      ↓
+Storage (CSV / Elasticsearch)
+      ↓
+Monitoring Dashboard (Streamlit / Kibana)
+```
+
+---
+
+# 🧩 Components
+
+### Log Sources
+
+Servers or applications continuously generate logs.
+
+### Ingestion Layer
+
+Logs are ingested into the system for processing.
+
+### Processing Engine
+
+Logs are parsed, structured, and processed.
+
+### Anomaly Detection
+
+Detects unusual patterns such as spikes in error logs.
+
+### Storage
+
+Processed logs are stored for analytics.
+
+### Monitoring
+
+Dashboards provide visualization and system monitoring.
+
+---
+
+# 📂 Project Structure
+
+```text
+distributed-log-pipeline
 │
-├── schemas/
-│ ├── log_schema.yaml
-│ └── anomaly_schema.yaml
+├── milestone-1
+│   ├── schemas
+│   ├── diagrams
+│   ├── docs
+│   ├── environment
+│   ├── tests
+│   ├── dask_app.py
+│   ├── ray_app.py
+│   └── README.md
 │
-├── diagrams/
-│ ├── system_architecture.png
-│ └── data_flow.png
+├── milestone-2
+│   ├── data
+│   ├── docs
+│   ├── processed_logs
+│   ├── schemas
+│   ├── generate_logs.py
+│   ├── ingestion.py
+│   ├── processing.py
+│   ├── anomaly_detection.py
+│   ├── alerting.py
+│   ├── dashboard.py
+│   ├── realtime_ingestion.py
+│   ├── send_logs_to_elasticsearch.py
+│   └── README.md
 │
-├── docs/
-│ └── architecture.md
-│
-├── environment/
-│ ├── requirements.txt
-│ └── setup.sh
-│
-├── tests/
-│ └── test_environment.py
-│
-├── screenshots/
-│ ├── dask_working.png
-│ ├── ray_working.png
-│ └── tests_passing.png
-│
-├── dask_app.py
-├── ray_app.py
 └── README.md
+```
 
 ---
 
-## 🧾 Description of Components
+# 🚀 Milestone-1
 
-### 1️⃣ Schemas
-- `log_schema.yaml` defines the structure of log data.
-- `anomaly_schema.yaml` defines the anomaly detection schema.
+Milestone-1 focuses on **system design and distributed computation concepts**.
 
-### 2️⃣ Diagrams
-- `system_architecture.png` shows the overall system architecture.
-- `data_flow.png` illustrates how data moves through the system.
+### Deliverables
 
-### 3️⃣ Documentation
-- `architecture.md` explains the system design and components in detail.
+* System Architecture Diagram
+* Data Flow Diagram
+* Log Schema Definition
+* Anomaly Schema Definition
+* Distributed processing with **Dask** and **Ray**
 
-### 4️⃣ Environment Setup
-- `requirements.txt` contains required Python packages.
-- `setup.sh` installs the required dependencies.
+### Run Distributed Processing
 
-### 5️⃣ Distributed Processing
-- `dask_app.py` demonstrates distributed computation using Dask.
-- `ray_app.py` demonstrates distributed computation using Ray.
+Run Dask example:
 
-### 6️⃣ Testing
-- `test_environment.py` validates environment setup.
-- Pytest is used for automated testing.
-
-### 7️⃣ Screenshots
-Screenshots are included to demonstrate:
-- Successful Dask execution
-- Successful Ray execution
-- Successful test execution
-
----
-
-## ⚙️ Installation Instructions
 ```bash
-# Clone the repository
+python milestone-1/dask_app.py
+```
+
+Run Ray example:
+
+```bash
+python milestone-1/ray_app.py
+```
+
+Run environment tests:
+
+```bash
+pytest milestone-1/tests
+```
+
+---
+
+# 🚀 Milestone-2
+
+Milestone-2 implements the **complete log analytics pipeline**.
+
+### Features
+
+* Log generation
+* Log ingestion pipeline
+* Log parsing and processing
+* Anomaly detection
+* Alerting system
+* Real-time log simulation
+* Monitoring dashboard
+* Elasticsearch integration
+* Kibana visualization
+
+---
+
+# ⚙️ Installation
+
+Clone the repository:
+
+```bash
 git clone https://github.com/Afrin-Shaik06/Demo.git
-
-# Navigate to project folder
 cd Demo
-
-# Install required dependencies
-pip install -r environment/requirements.txt
 ```
 
----
+Install dependencies:
 
-## ▶️ Running Dask Application
 ```bash
-python dask_app.py
+pip install -r milestone-1/environment/requirements.txt
 ```
-Expected Output:
-• Dask scheduler starts
-• Distributed computation runs
-• Results are printed in terminal
+
 ---
 
-## ▶️ Running Ray Application
+# ▶️ Main Execution Steps
+
+### 1️⃣ Generate Sample Logs
+
 ```bash
-python ray_app.py
+python milestone-2/generate_logs.py
 ```
-Expected Output:
-• Ray initializes local cluster
-• Remote tasks execute
-• Processed results displayed
+
 ---
 
-## 🧪 Running Tests
+### 2️⃣ Run Log Processing Pipeline
+
 ```bash
-pytest
+python milestone-2/processing.py
 ```
-Expected Output:
-• All tests pass successfully
-• No failures
+
+This will parse logs and generate processed outputs.
 
 ---
 
-## 📸 Proof of Execution
+### 3️⃣ Detect Log Anomalies
 
-Execution screenshots are available inside the `screenshots/` folder:
-- `dask_working.png`
-- `ray_working.png`
-- `tests_passing.png`
+```bash
+python milestone-2/anomaly_detection.py
+```
 
----
-
-## 📚 Technologies Used
-
-- Python 3.12
-- Dask
-- Ray
-- Pytest
-- YAML
-- draw.io
+This identifies abnormal log patterns.
 
 ---
 
-## 👩‍💻 Author
+### 4️⃣ Start Monitoring Dashboard
 
-Milestone 1 – Infosys Springboard  
-High Throughput Log Analytics and Monitoring System
+```bash
+streamlit run milestone-2/dashboard.py
+```
 
+Dashboard runs at:
 
+```
+http://localhost:8501
+```
 
+---
+
+### 5️⃣ Send Logs to Elasticsearch
+
+```bash
+python milestone-2/send_logs_to_elasticsearch.py
+```
+
+Logs will be available in Elasticsearch.
+
+---
+
+### 6️⃣ Visualize Logs in Kibana
+
+Open:
+
+```
+http://localhost:5601
+```
+
+Create dashboards to monitor logs.
+
+---
+
+# 📊 Outputs
+
+Processed logs are stored in:
+
+```
+milestone-2/processed_logs/output.csv
+```
+
+These include:
+
+* log level
+* service name
+* message
+* anomaly flags
+
+---
+
+# 📚 Technologies Used
+
+* Python 3.12
+* Dask
+* Ray
+* Pandas
+* Streamlit
+* Elasticsearch
+* Kibana
+* Pytest
+* YAML
+
+---
+
+# 👩‍💻 Author
+
+Shaik Mitaigiri Afrin
+B.Tech Student
+Infosys Springboard Project
+
+High Throughput Log Analytics & Monitoring System
