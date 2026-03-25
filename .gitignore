@@ -19,3 +19,5 @@ milestone-2/processed_logs/
 
 # System files
 .DS_Store
+
+milestone-2/data/*.json
