@@ -1,4 +1,6 @@
 dask
+pandas
+streamlit
+elasticsearch
 ray
 pytest
-pyyaml
