@@ -3,20 +3,14 @@
 
 The High Throughput Log Analytics & Monitoring System is a distributed log processing platform designed to simulate how modern large-scale systems monitor and analyze application logs in real time.
 
-The system generates large volumes of logs, processes them using distributed computing frameworks, detects anomalies, and visualizes system behavior using monitoring dashboards.
+The system generates large volumes of logs, processes them using distributed computing frameworks, detects anomalies, and visualizes system behavior through monitoring dashboards.
 
-This project demonstrates concepts such as:
-
-Distributed computing
-Log ingestion pipelines
-High-throughput log analytics
-Anomaly detection
-Real-time monitoring systems
+This project demonstrates key concepts used in real-world distributed monitoring systems such as scalable log pipelines, distributed processing, and anomaly detection.
 
 The project is implemented in two milestones:
 
-Milestone-1: Architecture design and distributed computing simulation
-Milestone-2: Real-time log processing pipeline and monitoring dashboards
+Milestone-1 – Architecture design and distributed computing simulation
+Milestone-2 – Real-time log processing pipeline and monitoring dashboard
 🧠 Key Concepts Demonstrated
 Distributed Systems
 Log Analytics
@@ -31,9 +25,9 @@ Dask	Distributed data processing
 Ray	Parallel task execution
 Pandas	Log data processing
 Streamlit	Monitoring dashboard
-Elasticsearch	Log indexing and search
+Elasticsearch	Log indexing and storage
 Kibana	Log analytics visualization
-Pytest	Testing framework
+Pytest	Testing
 YAML	Log schema definitions
 ## 📂 Project Structure
 ```
@@ -116,7 +110,7 @@ The file:
 
 milestone-1/dataflow.md
 
-explains how log data moves through the system, including:
+explains how log data flows through the system including:
 
 Log generation
 Log ingestion
@@ -157,7 +151,7 @@ Distributed Processing (Dask)
 Anomaly Detection
       │
       ▼
-Storage (CSV / Elasticsearch)
+Storage (CSV)
       │
       ▼
 Monitoring Dashboard
@@ -167,7 +161,7 @@ Distributed Cluster
 
 dask_cluster.py
 
-Initializes a Dask distributed cluster for scalable log processing.
+Initializes a distributed cluster for scalable log processing.
 
 Log Generation
 
@@ -204,7 +198,7 @@ Distributed Log Processing
 
 dask_pipeline.py
 
-Processes large log datasets using Dask distributed computing.
+Processes large log datasets using distributed computing.
 
 Run:
 
@@ -222,7 +216,7 @@ Alerting System
 
 alerting.py
 
-Generates alerts when anomalies are detected in logs.
+Generates alerts when anomalies are detected.
 
 Real-Time Log Simulation
 
@@ -230,20 +224,9 @@ realtime_ingestion.py
 
 Simulates continuous log streaming.
 
-Elasticsearch Integration
+📊 Monitoring Dashboard
 
-send_logs_to_elasticsearch.py
-
-Indexes processed logs into Elasticsearch.
-
-Run:
-
-python milestone-2/send_logs_to_elasticsearch.py
-📊 Monitoring Dashboards
-
-The system supports two dashboards.
-
-📈 Streamlit Monitoring Dashboard
+The system provides a monitoring dashboard built using Streamlit.
 
 Start the dashboard:
 
@@ -258,19 +241,8 @@ Features:
 Real-time log visualization
 System health monitoring
 Interactive filtering
-Anomaly tracking
 Log analytics charts
-📊 Elasticsearch & Kibana Dashboard
-
-After sending logs to Elasticsearch, open Kibana:
-
-http://localhost:5601
-
-Features:
-
-Log search and filtering
-Real-time monitoring
-Advanced analytics dashboards
+Anomaly tracking
 📁 Output Files
 
 Processed logs are stored in:
@@ -284,15 +256,38 @@ log_level
 service_name
 log_message
 anomaly_flag
-📸 Proof of Execution
+🔮 Future Enhancements
 
-Execution screenshots demonstrating:
+Future improvements can extend the capabilities of this system.
 
-Distributed processing
-Log pipeline execution
-Monitoring dashboard
+Advanced Log Analytics Dashboard
 
-are stored in the project folders.
+Integration with Elasticsearch and Kibana can be expanded to build advanced analytics dashboards including:
+
+Real-time log visualization
+Advanced log search and filtering
+Interactive monitoring dashboards
+Trend analysis and alerting
+Streaming Log Pipelines
+
+Future versions may integrate streaming technologies such as:
+
+Apache Kafka for real-time log streaming
+Apache Spark for large-scale analytics
+Machine Learning Anomaly Detection
+
+More advanced anomaly detection methods could include:
+
+Isolation Forest
+Time-series anomaly detection
+Deep learning based log analysis
+Cloud Deployment
+
+The system could be deployed using:
+
+Docker containers
+Kubernetes orchestration
+Cloud monitoring infrastructure
 
 👩‍💻 Author
 
@@ -303,6 +298,22 @@ Project: High Throughput Log Analytics & Monitoring System
 
 📜 License
 
-Copyright © 2026 Vidzai Digital
+Copyright (c) 2026 Vidzai Digital
 
-Permission is hereby granted to use this software for educational and demonstration purposes.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
