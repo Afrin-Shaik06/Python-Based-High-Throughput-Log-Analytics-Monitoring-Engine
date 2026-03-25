@@ -35,7 +35,8 @@ Elasticsearch	Log indexing and search
 Kibana	Log analytics visualization
 Pytest	Testing framework
 YAML	Log schema definitions
-📂 Project Structure
+## 📂 Project Structure
+```
 distributed-log-pipeline
 │
 ├── milestone-1
@@ -76,6 +77,7 @@ distributed-log-pipeline
 │   └── README.md
 │
 └── README.md
+```
 🚀 Milestone-1 – Architecture & Distributed Computing
 
 Milestone-1 focuses on designing the foundation of the log analytics system.
