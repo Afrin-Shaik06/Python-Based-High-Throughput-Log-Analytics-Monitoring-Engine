@@ -141,6 +141,7 @@ Anomaly detection
 Alert generation
 Monitoring dashboards
 ⚡ Log Processing Pipeline
+```
 Log Generator
       │
       ▼
@@ -160,6 +161,7 @@ Storage (CSV / Elasticsearch)
       │
       ▼
 Monitoring Dashboard
+```
 🧾 Milestone-2 Components
 Distributed Cluster
 
