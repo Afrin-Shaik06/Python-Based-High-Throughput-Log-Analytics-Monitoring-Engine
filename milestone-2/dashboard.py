@@ -98,7 +98,6 @@ try:
         # ALERT SECTION
         if anomaly_count > 0:
             st.error(f"🚨 {anomaly_count} anomalies detected!")
-            st.info("📧 Email alerts may have been triggered.")
             st.toast("🚨 Anomaly detected in logs!")
         else:
             st.success("✅ System running normally")
@@ -128,6 +127,15 @@ try:
 
                 st.plotly_chart(fig, use_container_width=True)
 
+                # PIE CHART
+                fig_pie = px.pie(
+                    values=level_counts.values,
+                    names=level_counts.index,
+                    title="Log Level Breakdown"
+                )
+
+                st.plotly_chart(fig_pie, use_container_width=True)
+
             else:
                 st.info("No data available")
 
@@ -152,6 +160,8 @@ try:
             else:
                 st.info("No data available")
 
+        st.divider()
+
         # -------------------------------------------------
         # LOG ACTIVITY OVER TIME
         # -------------------------------------------------
@@ -170,6 +180,63 @@ try:
             )
 
             st.plotly_chart(fig3, use_container_width=True)
+
+        # -------------------------------------------------
+        # ANOMALY TREND
+        # -------------------------------------------------
+        st.subheader("🚨 Anomaly Trend")
+
+        if not anomalies.empty and "@timestamp" in anomalies.columns:
+
+            anomaly_time = anomalies.copy()
+            anomaly_time["@timestamp"] = pd.to_datetime(anomaly_time["@timestamp"])
+            anomaly_time = anomaly_time.sort_values("@timestamp")
+
+            fig_anomaly = px.line(
+                anomaly_time,
+                x="@timestamp",
+                title="Anomalies Over Time"
+            )
+
+            st.plotly_chart(fig_anomaly, use_container_width=True)
+
+        else:
+            st.info("No anomaly trend data available")
+
+        st.divider()
+
+        # -------------------------------------------------
+        # TOP ERROR MESSAGES
+        # -------------------------------------------------
+        st.subheader("⚠️ Top Error Messages")
+
+        error_df = filtered_df[filtered_df["level"] == "ERROR"]
+
+        if not error_df.empty:
+
+            top_errors = error_df["message"].value_counts().head(5)
+
+            fig_errors = px.bar(
+                x=top_errors.values,
+                y=top_errors.index,
+                orientation="h",
+                labels={"x": "Count", "y": "Error Message"},
+                title="Most Frequent Errors"
+            )
+
+            st.plotly_chart(fig_errors, use_container_width=True)
+
+        else:
+            st.info("No error messages detected")
+
+        # -------------------------------------------------
+        # SERVICE SUMMARY
+        # -------------------------------------------------
+        st.subheader("📊 Log Count Per Service")
+
+        service_summary = filtered_df.groupby("service").size().reset_index(name="log_count")
+
+        st.dataframe(service_summary, use_container_width=True)
 
         # -------------------------------------------------
         # LATEST ANOMALY
