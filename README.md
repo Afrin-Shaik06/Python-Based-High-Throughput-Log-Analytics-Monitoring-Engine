@@ -270,24 +270,58 @@ Interactive monitoring dashboards
 Trend analysis and alerting
 Streaming Log Pipelines
 
-Future versions may integrate streaming technologies such as:
+Future Enhancements
+1. Full Elasticsearch Integration
 
-Apache Kafka for real-time log streaming
-Apache Spark for large-scale analytics
-Machine Learning Anomaly Detection
+Currently, logs are visualized in Kibana, but the system can be enhanced by directly pushing processed logs from the pipeline into Elasticsearch for real-time indexing, querying, and analytics.
 
-More advanced anomaly detection methods could include:
+2. Real-Time Streaming Log Processing
+
+Enhance the pipeline to process logs in real time using streaming frameworks instead of batch processing.
+
+Example technologies:
+
+Apache Kafka
+Spark Streaming
+
+This would allow continuous monitoring of system activity.
+
+3. Advanced Anomaly Detection Models
+
+Currently anomaly detection uses a Z-score statistical method. Future versions could include machine learning models such as:
 
 Isolation Forest
-Time-series anomaly detection
-Deep learning based log analysis
-Cloud Deployment
+LSTM-based anomaly detection
+Autoencoders
 
-The system could be deployed using:
+to detect complex system failures.
 
-Docker containers
-Kubernetes orchestration
-Cloud monitoring infrastructure
+4. Cloud Deployment
+
+Deploy the monitoring engine on cloud platforms such as:
+
+AWS
+Azure
+Google Cloud
+
+to support large-scale distributed systems.
+
+5. Alerting and Notification System
+
+Add automated alerts when anomalies are detected.
+
+Example integrations:
+
+Email alerts
+Slack notifications
+PagerDuty
+6. Interactive Dashboard Improvements
+
+Enhance the **Streamlit dashboard with:
+
+live log streaming
+anomaly alert panels
+advanced filtering options
 
 👩‍💻 Author
 
