@@ -5,3 +5,6 @@ streamlit
 elasticsearch
 pytest  
 pyyaml
+numpy
+plotly
+matplotlib
